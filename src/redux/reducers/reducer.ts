@@ -7,6 +7,11 @@ export const appReducer = (state=init,action:any)=>{
                 ...state,
                 name:action.payload,
             }
+            case 'CATEGORY_UPDATE':
+                return{
+                    ...state,
+                    currentCategory:action.payload,
+                }
         default: return state;
     }
 }
