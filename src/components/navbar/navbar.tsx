@@ -1,9 +1,10 @@
 import React from 'react'
 import styles from './navbar.module.css'
 import { Dropdown } from '../dropdown'
+import { categoryData } from '../../../utils/categoryData'
 const Navbar = ({data}:any) => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className={`navbar navbar-expand-lg navbar-light bg-light`}>
       <div className="container-fluid">
         <a className="navbar-brand" href="#">ex-News</a>
         <button
@@ -29,7 +30,7 @@ const Navbar = ({data}:any) => {
             
             <Dropdown 
             header={'Category'} 
-            data={['business','crime','domestic','education','entertainment','environment','food','health','lifestyle','other','politics','science','sports','technology','top','tourism','world']} />
+             data={categoryData}/>
           </ul>
           <form className="d-flex">
             

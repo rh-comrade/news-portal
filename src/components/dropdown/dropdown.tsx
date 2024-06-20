@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import styles from './dropdown.module.css'
 import { useDispatch } from 'react-redux'
 import { currentCategoryUpdate } from '@/redux/actions/action'
+
 const Dropdown = ({header,data}:any) => {
     const dispatch = useDispatch()
     const handleCategoryChange = (e:any)=>{
         dispatch(currentCategoryUpdate(e.target.id))
     }
+    
   return (
     <li className="nav-item dropdown">
               <a
