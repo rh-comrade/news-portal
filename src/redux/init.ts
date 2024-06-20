@@ -1,4 +1,5 @@
 export const init:Object = {
-    name:'',
-    currentCategory:''
+    news:[],
+    currentCategory:'',
+    fdata :[]
 }
