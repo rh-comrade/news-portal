@@ -16,9 +16,10 @@ const BASE_URL = 'https://newsdata.io/api/1/latest';
 const API_KEY = 'pub_46634119345883a40c9b58a86b6f16e00bbf4';
 const loadNews = async(url:string)=>{
     try {
-        const url = category 
-          ? `${BASE_URL}?apikey=${API_KEY}&category=${category}`
-          : `${BASE_URL}?apikey=${API_KEY} &language=en`;
+      var url = category 
+      ? `${BASE_URL}?apikey=${API_KEY}&language=en&category=${category}`
+        : `${BASE_URL}?apikey=${API_KEY}&language=en`;
+        console.log(url)
           
         const response = await axios.get(url);
         console.log(response)
