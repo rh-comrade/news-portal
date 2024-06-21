@@ -27,8 +27,8 @@ const Home = () => {
     const [details,setDetails] = useState([]);
 
     // API URL and KEY from env
-    const url = process.env.NEXT_PUBLIC_BASE_URL;
-    const key = process.env.NEXT_PUBLIC_API_KEY;
+    const url = 'https://newsdata.io/api/1/latest';
+    const key = 'process.env.NEXT_PUBLIC_API_KEY';
     
     const handleClick = (e:any)=>{
       const idRef = e.target.id
