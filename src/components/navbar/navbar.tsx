@@ -6,7 +6,7 @@ const Navbar = ({data}:any) => {
   return (
     <nav className={`navbar navbar-expand-lg navbar-light bg-light`}>
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">ex-News</a>
+        <a className="navbar-brand" href="/">ex-News</a>
         <button
           className="navbar-toggler"
           type="button"
@@ -32,10 +32,7 @@ const Navbar = ({data}:any) => {
             header={'Category'} 
              data={categoryData}/>
           </ul>
-          <form className="d-flex">
-            
-            <button className="btn btn-outline-success" type="submit">Search</button>
-          </form>
+          
         </div>
       </div>
     </nav>

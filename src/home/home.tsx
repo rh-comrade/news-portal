@@ -8,44 +8,62 @@ import { Navbar } from '@/components/navbar';
 import { Pagination } from '@/components/pagination';
 import { List } from '@/components/list';
 import { categoryData } from '../../utils/categoryData';
-
+import { newsUpdate } from '@/redux/actions/action';
+import { appStore } from '@/redux/store';
+import Link from 'next/link';
 
 const Home = () => {
   // Redux store data fetching according to need
     const storeData = useSelector((state:any)=>{
       return state.appReducer
     })
+
+    // dispatch data to store
+      const dispatch = useDispatch()
+
     // state for news and category
-    const [news,setNews] = useState([]);
-    const [category,setCategory] = useState('')
-    // API URL and Key
-    const BASE_URL = 'https://newsdata.io/api/1/latest';
-    const API_KEY = 'pub_46634119345883a40c9b58a86b6f16e00bbf4';
+    const news = storeData.news;
+    const category = storeData.currentCategory;
+    const [details,setDetails] = useState([]);
+
+    // API URL and KEY from env
+    const url = process.env.NEXT_PUBLIC_BASE_URL;
+    const key = process.env.NEXT_PUBLIC_API_KEY;
     
-    // to prevent many request if current is onging
-    const hasFetchedData = useRef(false);
+    const handleClick = (e:any)=>{
+      const idRef = e.target.id
+      // filtering selected product
+     const newsx= news.filter((news:any,ind:number)=>{
+          return news.article_id === idRef
+      })
+      setDetails(newsx)
+      console.log(newsx)
+  }
 
     // method for call news API and store data into news state
-    const fetchNews = async(category?:string)=>{
-        try{var url = category 
-        ? `${BASE_URL}?apikey=${API_KEY}&language=en&category=${category}`
-          : `${BASE_URL}?apikey=${API_KEY}&language=en`;
-          console.log(url)
-          const response = await axios.get(url);
-          setNews(response.data?.results)
-          console.log(news)
-          
+    const fetchData = async () => {
+      try {
+        console.log('Data fetching started');
+        const response = await axios.get(`${url}?apikey=${key}${category===''?'':`&category=${category}`}&language=en`);
+        console.log(response.data.results)
+        dispatch(newsUpdate(response.data.results))
+        // setNews(response.data.results);
       } catch (error) {
-        console.error('Error fetching news:', error);
+      console.log('an error occured during data fetching failed')
+        console.error('Error fetching data:', error);
+      } finally {
+        console.log('Data fetching process completed.');
       }
-      finally{
-        hasFetchedData.current = true;
-      }
-        
-    }
-    // this hook helps to fetchNews from API 1st time load and every categorychange
+    };
+    var timmer:any;
+    const debounceData = async()=>{
+      clearTimeout(timmer)
+      timmer =  setTimeout(()=>{
+          fetchData()
+      },10)
+  }
     useEffect(()=>{
-          fetchNews(category)
+          debounceData()
   },[category])
 
 
@@ -67,15 +85,15 @@ const Home = () => {
                   <h3 className='p2 mb-1'>{storeData.currentCategory===""?'Latest News':`Category: ${storeData.currentCategory}`}</h3>
                   <div className='container'>
                     {
-                      news.map((news:any,ind:number)=>(
-                <div className={`container m-2 p-3`} key={`div_${ind}`}>
-                    <h5 className={`d-flex justify-content-start`} key={`h5_${ind}`}>{news?.title}</h5>
-                    {news.image_url?<Image alt={`ex news conent-image`} height={80} width={80} src={news?.image_url} />:''}
-                    <p className={`d-flex justify-content-start`} key={`p_${ind}`}>{news?.pubDate}</p>
-                </div>
-            ))
-                    }
-                    {/* pagination component */}
+                          news.map((news:any,ind:number)=>(
+                          <div className={`container m-2 p-3`} key={`div_${ind}`}>
+                              <h5 onClick={handleClick} id={`${news.article_id}`} className={`d-flex justify-content-start`} key={`h5_${ind}`}><Link href={`/details/${news.article_id}`}>{news?.title}</Link></h5>
+                              {news.image_url?<Image alt={`ex news conent-image`} height={80} width={80} src={news?.image_url} />:''}
+                              <p className={`d-flex justify-content-start`} key={`p_${ind}`}>{news?.pubDate}</p>
+                          </div>
+                          ))
+                      }
+                    
                     <Pagination data={news}/>
                   </div>
                 </div>
