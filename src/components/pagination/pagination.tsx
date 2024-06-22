@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { filteredDataUpdate } from '@/redux/actions/action';
 
 const Pagination = ({data}:any) => {
+  // required variables for manage pagination
     const [currentPage,setCurrentPage] = useState(1)
     const [recordsPerPage,setRecordsPerpage] = useState(5);
     const lastIndex = recordsPerPage * currentPage;
@@ -13,8 +14,7 @@ const Pagination = ({data}:any) => {
     const nPage = Math.ceil(data.length/ recordsPerPage)
     const numbers: number[] = Array.from(Array(nPage + 1).keys()).slice(1);
     useEffect(()=>{
-        const e = {target:{id:1}}
-        handleClick(e)
+        setCurrentPage(1)
     },[])
     const dispatch = useDispatch();
 

@@ -1,5 +1,5 @@
 import {init} from '../init'
-
+// reducer function for collecting data from client and update to store
 export const appReducer = (state=init,action:any)=>{
     switch(action.type){
         case 'NEWS_UPDATE':

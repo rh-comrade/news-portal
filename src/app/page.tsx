@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { Home } from "@/home";
 import type { Metadata } from "next";
-import News from "@/newsApiTesting/news";
 
 export const metadata: Metadata = {
   title: "News Portal",

@@ -24,7 +24,7 @@ const Home = () => {
     // state for news and category
     const news = storeData.news;
     const category = storeData.currentCategory;
-    const [details,setDetails] = useState([]);
+    const fdata = storeData.fdata;
 
     // API URL and KEY from env
     const url = process.env.NEXT_PUBLIC_BASE_URL;
@@ -36,8 +36,7 @@ const Home = () => {
      const newsx= news.filter((news:any,ind:number)=>{
           return news.article_id === idRef
       })
-      setDetails(newsx)
-      console.log(newsx)
+
   }
 
     // method for call news API and store data into news state
